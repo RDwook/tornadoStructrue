@@ -6,7 +6,7 @@
 """
 
 """
-from cord.function import index_path
+from cord.function.path import index_path
 
 
 def path(name):

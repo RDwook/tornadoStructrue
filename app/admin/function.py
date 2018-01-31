@@ -6,7 +6,7 @@
 """
 
 """
-from cord.function import admin_path
+from cord.function.path import admin_path
 
 
 def path(name):
