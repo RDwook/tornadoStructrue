@@ -6,14 +6,13 @@
 """
 Mysql Operation of the data
 """
-from cord.library.mysql.mysqlbase import MysqlBase
-from cord.database import prefix
+from library.mysql.mysqlbase import MysqlBase
 
 
 class Db(MysqlBase):
     def __init__(self, table):
         super().__init__()
-        self.__table = prefix + table
+        self.__table = self.prefix + table
         self.condition = ''
 
     # Inserting data

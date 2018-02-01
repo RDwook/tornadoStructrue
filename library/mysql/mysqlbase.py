@@ -7,7 +7,14 @@
 Mysql Table Actions
 """
 import pymysql
-from cord.database import *
+from library.mysql.config import *
+# host = "127.0.0.1"
+# user = "root"
+# password = "123456"
+# database = "tro_db"
+# port = 3306
+# charset = "utf8"
+# prefix = 'db_'
 
 
 class MysqlBase:
@@ -16,6 +23,7 @@ class MysqlBase:
         self.db = pymysql.connect(host=host, user=user, password=password, db=database, port=port, charset=charset)
         # Creating to a cursor
         self.cursor = self.db.cursor()
+        self.prefix = prefix
 
     def query_db(self, query):
         return self.cursor.execute(query)
@@ -30,7 +38,7 @@ class MysqlBase:
 
     # Creating a table
     def create_table(self, table, values, primary_key='', engine='InnoDB', character='utf8mb4'):
-        table = prefix + table
+        table = self.prefix + table
         # Execute MYSQL using the Execute () method，Delete if Table exists
         self.drop_table(table)
         db_str = 'create table ' + table + '('
