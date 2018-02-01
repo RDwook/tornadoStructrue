@@ -4,7 +4,7 @@
 # @Author  : wook
 # @File    : mysql_base
 """
-Mysql Base
+Mysql Table Actions
 """
 import pymysql
 from cord.database import *
@@ -13,20 +13,23 @@ from cord.database import *
 class MysqlBase:
     def __init__(self):
         # Connecting to a database
-        self.__db = pymysql.connect(host=host, user=user, password=password, db=database, port=port, charset=charset)
+        self.db = pymysql.connect(host=host, user=user, password=password, db=database, port=port, charset=charset)
         # Creating to a cursor
-        self.__cursor = self.__db.cursor()
+        self.cursor = self.db.cursor()
+
+    def query_db(self, query):
+        return self.cursor.execute(query)
 
     # Creating a Database
-    def create_db(self, database, db_charset='utf8mb4'):
-        return self.__cursor.execute('create database ' + database + ' character set ' + db_charset + ';')
+    # def create_db(self, data_base, db_charset='utf8mb4'):
+    #     return self.cursor.execute('create database ' + data_base + ' character set ' + db_charset + ';')
 
     # delete a Database
-    def drop_db(self, database):
-        return self.__cursor.execute('drop database ' + ' if exists ' + database + ';')
+    # def drop_db(self, data_base):
+    #     return self.cursor.execute('drop database ' + ' if exists ' + data_base + ';')
 
     # Creating a table
-    def create_table(self, table, values, primary_key='', engine='InnoDB', charset='utf8mb4'):
+    def create_table(self, table, values, primary_key='', engine='InnoDB', character='utf8mb4'):
         table = prefix + table
         # Execute MYSQL using the Execute () method，Delete if Table exists
         self.drop_table(table)
@@ -40,17 +43,17 @@ class MysqlBase:
         else:
             db_str += 'PRIMARY KEY(' + primary_key + ')'
         db_str += ')ENGINE=' + engine + ' '
-        db_str += 'DEFAULT CHARSET=' + charset + ';'
-        self.__cursor.execute(db_str)
+        db_str += 'DEFAULT CHARSET=' + character + ';'
+        self.cursor.execute(db_str)
         print(db_str)
 
     # delete a table
     def drop_table(self, table):
-        return self.__cursor.execute('drop table ' + ' if exists ' + table + ';')
+        return self.cursor.execute('drop table ' + ' if exists ' + table + ';')
 
     def __del__(self):
         # Close a Database
-        self.__db.close()
+        self.db.close()
 
 
 if __name__ == "__main__":
