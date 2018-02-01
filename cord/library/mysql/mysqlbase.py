@@ -45,7 +45,7 @@ class MysqlBase:
         db_str += ')ENGINE=' + engine + ' '
         db_str += 'DEFAULT CHARSET=' + character + ';'
         self.cursor.execute(db_str)
-        print(db_str)
+        # print(db_str)
 
     # delete a table
     def drop_table(self, table):
